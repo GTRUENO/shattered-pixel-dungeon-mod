@@ -22,7 +22,7 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-public class Koopa extends Mob { // 쿠파: 보스 몬스터, 브레스 공격이 있음, 체력 절반 이하시 스텟 강화, 방어력 높음
+public class Koopa extends Mob {
 
     {
         HP = HT = 100;
