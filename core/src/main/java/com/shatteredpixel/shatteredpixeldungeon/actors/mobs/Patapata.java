@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.SwarmSprite;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Nokonoko;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -29,8 +30,10 @@ public class Patapata extends Mob { // 펄럭펄럭: 비행형, 사망 시 엉�
     public void die(Object cause) {
         flying = false;
         super.die(cause);
-        Mob newNoko = new Nokonoko();
+        Nokonoko newNoko = new Nokonoko();
         newNoko.pos = this.pos; // 몬스터가 죽은 위치 지정
+        if (newNoko.pos == -1) {
+            return;
         Dungeon.level.mobs.add(newNoko); // 엉금엉금 생성
 
         // 펄럭펄럭이 죽을 때 가지고 있던 버프, 디버프를 유지
