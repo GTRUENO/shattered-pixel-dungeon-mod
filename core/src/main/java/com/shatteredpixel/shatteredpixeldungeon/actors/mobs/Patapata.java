@@ -5,19 +5,17 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.SwarmSprite;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Nokonoko;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.PatapataSprite;
 import com.watabou.utils.Random;
 
-import java.util.ArrayList;
 
 public class Patapata extends Mob { // 펄럭펄럭: 비행형, 사망 시 엉금엉금을 스폰함
-
     {
-        spriteClass = SwarmSprite.class; // 이미지 바꾸기
+        spriteClass = PatapataSprite.class; // 이미지 바꾸기
 
         HP = HT = 5;
-        defenseSkill = 8;
+        defenseSkill = 0;
 
         EXP = 1;
         maxLvl = 8;
@@ -27,14 +25,15 @@ public class Patapata extends Mob { // 펄럭펄럭: 비행형, 사망 시 엉�
     }
 
     @Override
-    public void die(Object cause) {
+    public void die(Object cause) { // 죽으면 엉금엉금 생성
         flying = false;
         super.die(cause);
-        Nokonoko newNoko = new Nokonoko();
-        newNoko.pos = this.pos; // 몬스터가 죽은 위치 지정
-        if (newNoko.pos == -1) {
-            return;
-        Dungeon.level.mobs.add(newNoko); // 엉금엉금 생성
+        Mob newNoko = new Nokonoko();
+        newNoko.state = newNoko.HUNTING;
+        newNoko.pos = this.pos;
+        GameScene.add(newNoko);
+        Dungeon.level.mobs.add(newNoko);
+        Dungeon.level.occupyCell(newNoko); // 위치 점유
 
         // 펄럭펄럭이 죽을 때 가지고 있던 버프, 디버프를 유지
         if (buff( Burning.class ) != null) {
@@ -43,7 +42,7 @@ public class Patapata extends Mob { // 펄럭펄럭: 비행형, 사망 시 엉�
         if (buff( Poison.class ) != null) {
             Buff.affect( newNoko, Poison.class ).set(2);
         }
-        for (Buff b : buffs()){
+        for (Buff b : buffs()) {
             if (b.revivePersists) {
                 Buff.affect(newNoko, b.getClass());
             }
@@ -60,6 +59,7 @@ public class Patapata extends Mob { // 펄럭펄럭: 비행형, 사망 시 엉�
     public int attackSkill( Char target ) {
         return 8;
     }
+
 
     @Override
     public int drRoll() {

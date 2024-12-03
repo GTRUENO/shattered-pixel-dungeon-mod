@@ -3,16 +3,16 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.SlimeSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.BlooperSprite;
 import com.watabou.utils.Random;
 
 public class Blooper extends Mob { // 징오징오: 비행형 적, 피격시 확률로 실명 부여
 
     {
-        spriteClass = SlimeSprite.class; // 이미지 바꾸기
+        spriteClass = BlooperSprite.class; // 이미지 바꾸기
 
         HP = HT = 16;
-        defenseSkill = 12;
+        defenseSkill = 0;
 
         EXP = 4;
         maxLvl = 9;

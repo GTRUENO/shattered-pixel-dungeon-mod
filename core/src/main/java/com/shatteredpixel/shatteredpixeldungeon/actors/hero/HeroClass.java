@@ -77,6 +77,8 @@ import com.watabou.utils.DeviceCompat;
 
 public enum HeroClass {
 
+	MARIO(HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR),
+	LUIGI(HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK),
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
 	ROGUE( HeroSubClass.ASSASSIN, HeroSubClass.FREERUNNER ),
@@ -109,6 +111,14 @@ public enum HeroClass {
 		new ScrollOfIdentify().identify();
 
 		switch (this) {
+			case MARIO:
+				initMario( hero );
+				break;
+
+			case LUIGI:
+				initLuigi( hero );
+				break;
+
 			case WARRIOR:
 				initWarrior( hero );
 				break;
@@ -170,6 +180,35 @@ public enum HeroClass {
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
+	}
+
+	private static void initMario( Hero hero ) {
+		(hero.belongings.weapon = new WornShortsword()).identify();
+		ThrowingStone stones = new ThrowingStone();
+		stones.quantity(3).collect();
+		Dungeon.quickslot.setSlot(0, stones);
+
+		if (hero.belongings.armor != null){
+			hero.belongings.armor.affixSeal(new BrokenSeal());
+			Catalog.setSeen(BrokenSeal.class); //as it's not added to the inventory
+		}
+
+		new PotionOfHealing().identify();
+		new ScrollOfRage().identify();
+	}
+
+	private static void initLuigi( Hero hero ) {
+		MagesStaff staff;
+
+		staff = new MagesStaff(new WandOfMagicMissile());
+
+		(hero.belongings.weapon = staff).identify();
+		hero.belongings.weapon.activate(hero);
+
+		Dungeon.quickslot.setSlot(0, staff);
+
+		new ScrollOfUpgrade().identify();
+		new PotionOfLiquidFlame().identify();
 	}
 
 	private static void initMage( Hero hero ) {
@@ -250,6 +289,10 @@ public enum HeroClass {
 		switch (this) {
 			case WARRIOR: default:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
+			case MARIO:
+				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
+			case LUIGI:
+				return new ArmorAbility[]{new ElementalBlast(), new WildMagic(), new WarpBeacon()};
 			case MAGE:
 				return new ArmorAbility[]{new ElementalBlast(), new WildMagic(), new WarpBeacon()};
 			case ROGUE:
@@ -265,6 +308,10 @@ public enum HeroClass {
 		switch (this) {
 			case WARRIOR: default:
 				return Assets.Sprites.WARRIOR;
+			case MARIO:
+				return Assets.Sprites.MARIO;
+			case LUIGI:
+				return Assets.Sprites.LUIGI;
 			case MAGE:
 				return Assets.Sprites.MAGE;
 			case ROGUE:
@@ -280,6 +327,10 @@ public enum HeroClass {
 		switch (this) {
 			case WARRIOR: default:
 				return Assets.Splashes.WARRIOR;
+			case MARIO:
+				return Assets.Splashes.MARIO;
+			case LUIGI:
+				return Assets.Splashes.LUIGI;
 			case MAGE:
 				return Assets.Splashes.MAGE;
 			case ROGUE:

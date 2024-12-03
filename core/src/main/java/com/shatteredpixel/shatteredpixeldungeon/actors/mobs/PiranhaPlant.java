@@ -4,13 +4,13 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.SnakeSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.PiranhaPlantSprite;
 import com.watabou.utils.Random;
 
 public class PiranhaPlant extends Mob { // 뻐끔플라워: 움직이지 못한다, 원거리 공격을 한다, 체력, 회피가 낮다.
 
     {
-        spriteClass = SnakeSprite.class; // 이미지 바꾸기
+        spriteClass = PiranhaPlantSprite.class; // 이미지 바꾸기
 
         HP = HT = 4;
         defenseSkill = 0;

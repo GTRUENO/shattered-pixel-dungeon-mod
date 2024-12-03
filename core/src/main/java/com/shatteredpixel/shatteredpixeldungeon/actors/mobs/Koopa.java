@@ -16,7 +16,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.GooSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.KoopaSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
@@ -28,7 +28,7 @@ public class Koopa extends Mob {
         HP = HT = 100;
         EXP = 10;
         defenseSkill = 8;
-        spriteClass = GooSprite.class; // 이미지 바꾸기
+        spriteClass = KoopaSprite.class; // 이미지 바꾸기
 
         properties.add(Property.BOSS);
         properties.add(Property.FIERY);

@@ -3,16 +3,16 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLevitation;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.GnollSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.LakituSprite;
 import com.watabou.utils.Random;
 
 public class Lakitu extends Mob { // 김수한무: 비행형 적, 사거리2 원거리 공격, 부유의 물약 드랍
 
     {
-        spriteClass = GnollSprite.class; // 이미지 바꾸기
+        spriteClass = LakituSprite.class; // 이미지 바꾸기
 
         HP = HT = 10;
-        defenseSkill = 10;
+        defenseSkill = 0;
 
         EXP = 3;
         maxLvl = 9;

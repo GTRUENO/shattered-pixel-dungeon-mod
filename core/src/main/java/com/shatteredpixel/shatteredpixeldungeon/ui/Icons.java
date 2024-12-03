@@ -447,10 +447,19 @@ public enum Icons {
 		switch (cl) {
 			case WARRIOR:
 				return new ItemSprite(ItemSpriteSheet.SEAL);
+			case MARIO:
+				return new ItemSprite(ItemSpriteSheet.SEAL);
 			case MAGE:
 				//mage's staff normally has 2 pixels extra at the top for particle effects, we chop that off here
 				Image result = new ItemSprite(ItemSpriteSheet.MAGES_STAFF);
 				RectF frame = result.frame();
+				frame.top += frame.height()/8f;
+				result.frame(frame);
+				return result;
+			case LUIGI:
+				//mage's staff normally has 2 pixels extra at the top for particle effects, we chop that off here
+				result = new ItemSprite(ItemSpriteSheet.MAGES_STAFF);
+				frame = result.frame();
 				frame.top += frame.height()/8f;
 				result.frame(frame);
 				return result;

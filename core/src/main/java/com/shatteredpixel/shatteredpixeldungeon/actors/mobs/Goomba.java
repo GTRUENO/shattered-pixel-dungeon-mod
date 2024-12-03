@@ -1,16 +1,16 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.RatSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.GoombaSprite;
 import com.watabou.utils.Random;
 
 public class Goomba extends Mob { // 굼바: 특징없는 일반 몬스터
 
     {
-        spriteClass = RatSprite.class; // 굼바 이미지 추가 되면 굼바 이미지로 바꾸기
+        spriteClass = GoombaSprite.class; // 굼바 이미지 추가 되면 굼바 이미지로 바꾸기
 
         HP = HT = 8;
-        defenseSkill = 2; // 회피 확률
+        defenseSkill = 0; // 회피 확률
 
         maxLvl = 5; // 최대 레벨
     }

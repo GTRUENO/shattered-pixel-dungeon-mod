@@ -238,7 +238,9 @@ public class Assets {
 
 	public static class Splashes {
 		public static final String WARRIOR  = "splashes/warrior.jpg";
+		public static final String MARIO  = "splashes/Mario.jpg";
 		public static final String MAGE     = "splashes/mage.jpg";
+		public static final String LUIGI  = "splashes/Luigi.jpg";
 		public static final String ROGUE    = "splashes/rogue.jpg";
 		public static final String HUNTRESS = "splashes/huntress.jpg";
 		public static final String DUELIST  = "splashes/duelist.jpg";
@@ -255,7 +257,9 @@ public class Assets {
 		public static final String ITEM_ICONS   = "sprites/item_icons.png";
 
 		public static final String WARRIOR  = "sprites/warrior.png";
+		public static final String MARIO  = "sprites/mario.png";
 		public static final String MAGE     = "sprites/mage.png";
+		public static final String LUIGI  = "sprites/Luigi.png";
 		public static final String ROGUE    = "sprites/rogue.png";
 		public static final String HUNTRESS = "sprites/huntress.png";
 		public static final String DUELIST  = "sprites/duelist.png";
@@ -327,5 +331,12 @@ public class Assets {
 		public static final String FUNGAL_SPINNER   = "sprites/fungal_spinner.png";
 		public static final String FUNGAL_SENTRY    = "sprites/fungal_sentry.png";
 		public static final String FUNGAL_CORE      = "sprites/fungal_core.png";
+		public static final String Goomba      = "sprites/Goomba.png";
+		public static final String Nokonoko      = "sprites/Nokonoko.png";
+		public static final String PiranhaPlant      = "sprites/PiranhaPlant.png";
+		public static final String Lakitu      = "sprites/Lakitu.png";
+		public static final String Patapata      = "sprites/Patapata.png";
+		public static final String Blooper      = "sprites/Blooper.png";
+		public static final String Koopa      = "sprites/Koopa.png";
 	}
 }

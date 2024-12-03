@@ -2,16 +2,15 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.RatSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.NokonokoSprite;
 import com.watabou.utils.Random;
 
 public class Nokonoko extends Mob { // 엉금엉금: 죽으면 등껍집 드롭하는 몬스터, 방어력이 높은 편.
 
     {
-        spriteClass = RatSprite.class; //이미지 바꾸기
-
+        spriteClass = NokonokoSprite.class; //이미지 바꾸기
         HP = HT = 10;
-        defenseSkill = 2;
+        defenseSkill = 0;
 
         EXP = 2;
         maxLvl = 8;
