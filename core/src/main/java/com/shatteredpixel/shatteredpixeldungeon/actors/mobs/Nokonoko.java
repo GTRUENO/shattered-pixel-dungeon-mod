@@ -8,7 +8,7 @@ import com.watabou.utils.Random;
 public class Nokonoko extends Mob { // 엉금엉금: 죽으면 등껍집 드롭하는 몬스터, 방어력이 높은 편.
 
     {
-        spriteClass = NokonokoSprite.class; //이미지 바꾸기
+        spriteClass = NokonokoSprite.class;
         HP = HT = 10;
         defenseSkill = 0;
 

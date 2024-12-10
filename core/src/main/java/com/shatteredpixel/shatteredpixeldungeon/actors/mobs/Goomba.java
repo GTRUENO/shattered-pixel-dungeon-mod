@@ -7,7 +7,7 @@ import com.watabou.utils.Random;
 public class Goomba extends Mob { // 굼바: 특징없는 일반 몬스터
 
     {
-        spriteClass = GoombaSprite.class; // 굼바 이미지 추가 되면 굼바 이미지로 바꾸기
+        spriteClass = GoombaSprite.class;
 
         HP = HT = 8;
         defenseSkill = 0; // 회피 확률

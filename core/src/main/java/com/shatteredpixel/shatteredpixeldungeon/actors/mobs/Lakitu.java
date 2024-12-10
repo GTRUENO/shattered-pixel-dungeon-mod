@@ -9,7 +9,7 @@ import com.watabou.utils.Random;
 public class Lakitu extends Mob { // 김수한무: 비행형 적, 사거리2 원거리 공격, 부유의 물약 드랍
 
     {
-        spriteClass = LakituSprite.class; // 이미지 바꾸기
+        spriteClass = LakituSprite.class;
 
         HP = HT = 10;
         defenseSkill = 0;

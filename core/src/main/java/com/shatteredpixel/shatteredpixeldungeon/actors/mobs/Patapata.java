@@ -12,7 +12,7 @@ import com.watabou.utils.Random;
 
 public class Patapata extends Mob { // 펄럭펄럭: 비행형, 사망 시 엉금엉금을 스폰함
     {
-        spriteClass = PatapataSprite.class; // 이미지 바꾸기
+        spriteClass = PatapataSprite.class;
 
         HP = HT = 5;
         defenseSkill = 0;

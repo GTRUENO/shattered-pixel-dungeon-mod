@@ -75,7 +75,7 @@ public class MobSpawner extends Actor {
 				//3x rat, 1x snake
 				return new ArrayList<>(Arrays.asList(
 						Goomba.class, Goomba.class, Goomba.class,
-						Nokonoko.class, Patapata.class));
+						Nokonoko.class));
 			case 2:
 				//2x rat, 1x snake, 2x gnoll
 				return new ArrayList<>(Arrays.asList(Goomba.class, Goomba.class,
@@ -87,13 +87,12 @@ public class MobSpawner extends Actor {
 						PiranhaPlant.class,
 						Nokonoko.class, Nokonoko.class,
 						Lakitu.class,
-						Patapata.class,
-						Crab.class));
+						Patapata.class));
 			case 4: case 5:
 				//1x gnoll, 1x swarm, 2x crab, 2x slime
 				return new ArrayList<>(Arrays.asList(Lakitu.class,
 						Patapata.class,
-						Crab.class, Crab.class,
+						Crab.class,
 						Blooper.class, Blooper.class));
 
 			// Prison

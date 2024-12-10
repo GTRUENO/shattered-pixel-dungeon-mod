@@ -10,7 +10,7 @@ import com.watabou.utils.Random;
 public class PiranhaPlant extends Mob { // 뻐끔플라워: 움직이지 못한다, 원거리 공격을 한다, 체력, 회피가 낮다.
 
     {
-        spriteClass = PiranhaPlantSprite.class; // 이미지 바꾸기
+        spriteClass = PiranhaPlantSprite.class;
 
         HP = HT = 4;
         defenseSkill = 0;
@@ -21,7 +21,7 @@ public class PiranhaPlant extends Mob { // 뻐끔플라워: 움직이지 못한�
         loot = Generator.Category.SEED; // 무작위 씨앗 드랍
         lootChance = 0.1f;
 
-        properties.add(Property.IMMOVABLE); // 움직이지 못함
+        properties.add(Property.IMMOVABLE); // 움직이지 못하는 속성
     }
 
 
@@ -46,4 +46,9 @@ public class PiranhaPlant extends Mob { // 뻐끔플라워: 움직이지 못한�
                 && new Ballistica( pos, enemy.pos, Ballistica.STOP_TARGET | Ballistica.STOP_SOLID | Ballistica.IGNORE_SOFT_SOLID).collisionPos == enemy.pos
                 && new Ballistica( enemy.pos, pos, Ballistica.STOP_TARGET | Ballistica.STOP_SOLID | Ballistica.IGNORE_SOFT_SOLID).collisionPos == pos;
     } // 장애물에 막히지 않아야 공격 가능
+
+    @Override
+    protected boolean getCloser(int target) {
+        return false;
+    } // 움직이지 못함
 }

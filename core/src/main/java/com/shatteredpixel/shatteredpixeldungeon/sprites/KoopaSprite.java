@@ -135,11 +135,6 @@ public class KoopaSprite extends MobSprite {
         super.play(anim);
     }
 
-    @Override
-    public int blood() {
-        return 0xFF000000;
-    }
-
     public void spray(boolean on){
         spray.on = on;
     }
@@ -165,7 +160,7 @@ public class KoopaSprite extends MobSprite {
         public GooParticle() {
             super();
 
-            color( 0x000000 );
+            color( 0xFF4500 );
             lifespan = 0.3f;
 
             acc.set( 0, +50 );

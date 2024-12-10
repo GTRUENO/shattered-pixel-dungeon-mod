@@ -9,7 +9,7 @@ import com.watabou.utils.Random;
 public class Blooper extends Mob { // 징오징오: 비행형 적, 피격시 확률로 실명 부여
 
     {
-        spriteClass = BlooperSprite.class; // 이미지 바꾸기
+        spriteClass = BlooperSprite.class;
 
         HP = HT = 16;
         defenseSkill = 0;

@@ -5,11 +5,11 @@ import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -20,6 +20,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.KoopaSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.GameMath;
 import com.watabou.utils.Random;
 
 public class Koopa extends Mob {
@@ -28,7 +29,7 @@ public class Koopa extends Mob {
         HP = HT = 100;
         EXP = 10;
         defenseSkill = 8;
-        spriteClass = KoopaSprite.class; // 이미지 바꾸기
+        spriteClass = KoopaSprite.class;
 
         properties.add(Property.BOSS);
         properties.add(Property.FIERY);
@@ -39,9 +40,8 @@ public class Koopa extends Mob {
     @Override
     public int damageRoll() {
         int min = 1;
-        int max = (HP*2 <= HT) ? 12 : 8; // hp 절반 이하면 스텟 강화
+        int max = (HP*2 <= HT) ? 2 : 1; // hp 절반 이하면 스텟 강화
         if (breath > 0) {
-            breath = 0;
             if (enemy == Dungeon.hero) {
                 Statistics.qualifiedForBossChallengeBadge = false;
                 Statistics.bossScores[0] -= 100;
@@ -105,49 +105,69 @@ public class Koopa extends Mob {
         damage = super.attackProc( enemy, damage );
         if (breath > 0) {
             PixelScene.shake( 3, 0.2f ); // 특수 공격시 화면 흔들림 효과
+            Buff.affect(enemy, Burning.class).reignite(enemy); // 특수 공격시 화상 부여
+            if (enemy.sprite.visible) Splash.at( enemy.sprite.center(), sprite.blood(), 5);
+            breath = 0;
         }
 
         return damage;
     }
 
+    @Override
+    public void updateSpriteState() {
+        super.updateSpriteState();
+
+        if (breath > 0){
+            ((KoopaSprite)sprite).pumpUp( breath );
+        }
+    }
 
     @Override
     protected boolean doAttack( Char enemy ) {
         if (breath == 1) {
             breath++;
-            Ballistica ballistica = new Ballistica(pos, enemy.pos, Ballistica.STOP_TARGET | Ballistica.STOP_SOLID);
-            for (int cell : ballistica.subPath(0, ballistica.dist)) {
-                // 경로 상의 각 셀에 파티클 표시
-                CellEmitter.get(cell).burst(Speck.factory(Speck.LIGHT), 1); // 빛 파티클을 사용해 경로 표시
-            }
+            ((KoopaSprite)sprite).pumpUp( breath );
+
             spend( attackDelay() );
 
             return true;
         } else if (breath >= 2 || Random.Int( (HP*2 <= HT) ? 2 : 5 ) > 0) {
 
             boolean visible = Dungeon.level.heroFOV[pos];
-            Ballistica ballistica = new Ballistica(pos, enemy.pos, Ballistica.STOP_TARGET | Ballistica.STOP_SOLID);
-            for (int cell : ballistica.subPath(0, ballistica.dist)) {
-                if (!Dungeon.level.passable[cell]) break; // 경로가 막히면 중단
 
-                CellEmitter.get(cell).burst(Speck.factory(Speck.INFERNO), 3); // 불꽃 파티클
-                GameScene.add(Blob.seed(cell, 5, Fire.class)); // 5턴 동안 불 지속
+            if (visible) {
+                if (breath >= 2) {
+                    ((KoopaSprite) sprite).pumpAttack();
+                } else {
+                    sprite.attack(enemy.pos);
+                }
+            } else {
+                if (breath >= 2){
+                    ((KoopaSprite)sprite).triggerEmitters();
+                }
+                attack( enemy );
+                Invisibility.dispel(this);
+                spend( attackDelay() );
             }
-
-            sprite.zap(enemy.pos); //화염구 발사 애니메이션
-            attack( enemy );
-            spend( attackDelay() );
-
 
             return !visible;
 
         } else {
-            breath++;
-            spend( attackDelay() );
+
+            if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES)){
+                breath += 2;
+                //don't want to overly punish players with slow move or attack speed
+                spend(GameMath.gate(attackDelay(), (int)Math.ceil(enemy.cooldown()), 3*attackDelay()));
+            } else {
+                breath++;
+                spend( attackDelay() );
+            }
+
+            ((KoopaSprite)sprite).pumpUp( breath );
 
             if (Dungeon.level.heroFOV[pos]) {
                 sprite.showStatus( CharSprite.WARNING, Messages.get(this, "!!!") );
-                GLog.n( Messages.get(this, "브레스") );
+                GLog.n( Messages.get(this, "pumpup") );
             }
 
             return true;
@@ -196,7 +216,7 @@ public class Koopa extends Mob {
         if ((HP*2 <= HT) && !bleeding){ // 체력 절반 이하 일때
             BossHealthBar.bleed(true); // 보스 체력바에 출혈 표시
             sprite.showStatus(CharSprite.WARNING, Messages.get(this, "enraged")); // 분노 상태 표시
-            yell(Messages.get(this, "크아아!")); // 보스 대사
+            yell(Messages.get(this, "gluuurp")); // 보스 대사
         }
         LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
         if (lock != null && !isImmune(src.getClass()) && !isInvulnerable(src.getClass())){
@@ -218,7 +238,7 @@ public class Koopa extends Mob {
         Badges.validateBossSlain(); // 업적 획득
         Statistics.bossScores[0] += 1000; // 점수 획득
 
-        yell( Messages.get(this, "크허헉") ); // 패배 대사
+        yell( Messages.get(this, "defeated") ); // 패배 대사
     }
 
     @Override
